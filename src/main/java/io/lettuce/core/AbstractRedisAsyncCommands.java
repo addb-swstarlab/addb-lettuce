@@ -2154,4 +2154,9 @@ public abstract class AbstractRedisAsyncCommands<K, V> implements RedisHashAsync
     public RedisFuture<String> fpwrite(FpWriteArgs fpWriteArgs) {
         return dispatch(commandBuilder.fpwrite(fpWriteArgs));
     }
+
+    @Override
+    public RedisFuture<List<String>> fpscan(FpScanArgs fpScanArgs) {
+        return dispatch(commandBuilder.fpscan(fpScanArgs));
+    }
 }

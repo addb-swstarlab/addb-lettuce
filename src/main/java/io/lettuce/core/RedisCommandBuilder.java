@@ -3094,6 +3094,13 @@ class RedisCommandBuilder<K, V> extends BaseRedisCommandBuilder<K, V> {
         return createCommand(FPWRITE, new StatusOutput<>(codec), args);
     }
 
+    Command<K, V, List<String>> fpscan(FpScanArgs fpScanArgs) {
+        CommandArgs<K, V> args = new CommandArgs(codec);
+        fpScanArgs.build(args);
+
+        return createCommand(FPSCAN, new AddbListOutput(codec), args);
+    }
+
     private boolean allElementsInstanceOf(Object[] objects, Class<?> expectedAssignableType) {
 
         for (Object object : objects) {

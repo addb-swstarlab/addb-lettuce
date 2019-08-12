@@ -28,6 +28,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.test.LettuceExtension;
 
+import java.util.List;
+
 /**
  * @author Doyoung Kim
  */
@@ -52,7 +54,25 @@ public class AddbCommandIntegrationTests extends TestSupport {
         FpWriteArgs args = FpWriteArgs.Builder.dataKey("D:{100:1:2}")
                 .partitionInfo("1:2")
                 .columnCount("4")
-                .data("1", "2", "3", "4");
+                .data("D1", "D2", "D3", "D4");
         assertThat(redis.fpwrite(args)).isEqualTo("OK");
+    }
+
+    @Test
+    void fpscan() {
+        FpWriteArgs wargs = FpWriteArgs.Builder.dataKey("D:{100:1:2}")
+                .partitionInfo("1:2")
+                .columnCount("4")
+                .data("D1", "D2", "D3", "D4");
+        redis.fpwrite(wargs);
+
+        FpScanArgs sargs = FpScanArgs.Builder.dataKey("D:{100:1:2}")
+                .columns("1", "2", "3", "4");
+        List<String> results = redis.fpscan(sargs);
+        assertThat(results).hasSize(4);
+        assertThat(results.contains("D1")).isTrue();
+        assertThat(results.contains("D2")).isTrue();
+        assertThat(results.contains("D3")).isTrue();
+        assertThat(results.contains("D4")).isTrue();
     }
 }

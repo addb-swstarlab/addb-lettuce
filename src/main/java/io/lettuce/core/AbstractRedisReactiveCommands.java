@@ -2223,4 +2223,9 @@ public abstract class AbstractRedisReactiveCommands<K, V> implements RedisHashRe
     public Mono<String> fpwrite(FpWriteArgs fpWriteArgs) {
         return createMono(() -> commandBuilder.fpwrite(fpWriteArgs));
     }
+
+    @Override
+    public Flux<String> fpscan(FpScanArgs fpScanArgs) {
+        return createDissolvingFlux(() -> commandBuilder.fpscan(fpScanArgs));
+    }
 }

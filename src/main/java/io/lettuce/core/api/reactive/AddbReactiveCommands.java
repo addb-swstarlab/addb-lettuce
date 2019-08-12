@@ -16,6 +16,7 @@
 package io.lettuce.core.api.reactive;
 
 import io.lettuce.core.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -35,4 +36,13 @@ public interface AddbReactiveCommands {
      */
     Mono<String> fpwrite(FpWriteArgs fpWriteArgs);
 
+
+    /**
+     * Scan row-column data on relation from ADDB.
+     *
+     * @param fpScanArgs dataKey, partitionInfo, columnCount, data
+     *
+     * @return List&lt;String&gt; array-reply list of row-column data.
+     */
+    Flux<String> fpscan(FpScanArgs fpScanArgs);
 }

@@ -17,6 +17,8 @@ package io.lettuce.core.api.async;
 
 import io.lettuce.core.*;
 
+import java.util.List;
+
 /**
  * Asynchronous executed commands for ADDB.
  *
@@ -33,4 +35,13 @@ public interface AddbAsyncCommands {
      * @return String simple-string-reply {@code OK} if {@code SET} was executed correctly.
      */
     RedisFuture<String> fpwrite(FpWriteArgs fpWriteArgs);
+
+    /**
+     * Scan row-column data on relation from ADDB.
+     *
+     * @param fpScanArgs dataKey, partitionInfo, columnCount, data
+     *
+     * @return List&lt;String&gt; array-reply list of row-column data.
+     */
+    RedisFuture<List<String>> fpscan(FpScanArgs fpScanArgs);
 }

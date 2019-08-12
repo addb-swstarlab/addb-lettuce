@@ -99,7 +99,7 @@ public enum CommandType implements ProtocolKeyword {
     ASKING, CLUSTER,
 
     // ADDB
-    FPWRITE;
+    FPWRITE, FPSCAN;
 
     public final byte[] bytes;
 

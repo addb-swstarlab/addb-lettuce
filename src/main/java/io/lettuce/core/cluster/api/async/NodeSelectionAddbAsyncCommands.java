@@ -15,7 +15,10 @@
  */
 package io.lettuce.core.cluster.api.async;
 
+import io.lettuce.core.FpScanArgs;
 import io.lettuce.core.FpWriteArgs;
+
+import java.util.List;
 
 /**
  * Asynchronous executed commands on a node selection for Strings.
@@ -32,6 +35,14 @@ public interface NodeSelectionAddbAsyncCommands {
      *
      * @return String simple-string-reply {@code OK} if {@code SET} was executed correctly.
      */
-    AsyncExecutions<String> set(FpWriteArgs fpWriteArgs);
+    AsyncExecutions<String> fpwrite(FpWriteArgs fpWriteArgs);
 
+    /**
+     * Scan row-column data on relation from ADDB.
+     *
+     * @param fpScanArgs dataKey, partitionInfo, columnCount, data
+     *
+     * @return List&lt;String&gt; array-reply list of row-column data.
+     */
+    AsyncExecutions<List<String>> fpscan(FpScanArgs fpScanArgs);
 }

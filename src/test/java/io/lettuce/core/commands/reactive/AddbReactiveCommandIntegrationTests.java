@@ -17,8 +17,10 @@ package io.lettuce.core.commands.reactive;
 
 import javax.inject.Inject;
 
+import io.lettuce.core.FpScanArgs;
 import io.lettuce.core.FpWriteArgs;
 import io.lettuce.core.commands.AddbCommandIntegrationTests;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
@@ -30,6 +32,8 @@ import io.lettuce.core.api.reactive.RedisReactiveCommands;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.commands.StringCommandIntegrationTests;
 import io.lettuce.test.ReactiveSyncInvocationHandler;
+
+import java.util.Arrays;
 
 /**
  * @author Doyoung Kim
@@ -46,16 +50,38 @@ class AddbReactiveCommandIntegrationTests extends AddbCommandIntegrationTests {
         this.reactive = connection.reactive();
     }
 
+    @BeforeEach
+    void setUp() {
+        this.reactive.flushall().subscribe();
+    }
+
     @Test
     void fpwrite() {
         FpWriteArgs args = FpWriteArgs.Builder.dataKey("D:{100:1:2}")
                 .partitionInfo("1:2")
                 .columnCount("4")
-                .data("1", "2", "3", "4");
+                .data("D1", "D2", "D3", "D4");
 
         Mono<String> fpwrite = reactive.fpwrite(args);
-        StepVerifier.create(fpwrite.flux().next())
+        StepVerifier.create(fpwrite.flux())
                 .expectNext("OK")
+                .verifyComplete();
+    }
+
+    @Test
+    void fpscan() {
+        FpWriteArgs wargs = FpWriteArgs.Builder.dataKey("D:{100:1:2}")
+                .partitionInfo("1:2")
+                .columnCount("4")
+                .data("D1", "D2", "D3", "D4");
+        Mono<String> fpwrite = reactive.fpwrite(wargs);
+        fpwrite.subscribe();
+
+        FpScanArgs sargs = FpScanArgs.Builder.dataKey("D:{100:1:2}")
+                .columns("1", "2", "3", "4");
+        Flux<String> fpscan = reactive.fpscan(sargs);
+        StepVerifier.create(fpscan)
+                .expectNext("D1", "D2", "D3", "D4")
                 .verifyComplete();
     }
 }

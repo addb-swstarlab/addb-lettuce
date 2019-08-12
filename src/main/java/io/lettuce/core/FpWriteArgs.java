@@ -15,8 +15,6 @@
  */
 package io.lettuce.core;
 
-import static io.lettuce.core.protocol.CommandKeyword.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,10 +28,9 @@ import io.lettuce.core.protocol.CommandArgs;
  *
  * <p>
  * {@link FpWriteArgs} is a mutable object and instances should be used only once to avoid shared mutable state.
+ * </p>
  *
- * @author Will Glozer
- * @author Xy Ma
- * @author Mark Paluch
+ * @author Doyoung Kim
  */
 public class FpWriteArgs implements CompositeArgument {
     private String dataKey;
@@ -83,9 +80,9 @@ public class FpWriteArgs implements CompositeArgument {
         }
 
         /**
-         * Creates new {@link FpWriteArgs} setting {@literal dataKey} using string.
+         * Creates new {@link FpWriteArgs} setting {@literal data} using string.
          *
-         * @return new {@link FpWriteArgs} with {@literal dataKey} set.
+         * @return new {@link FpWriteArgs} with {@literal data} set.
          * @see FpWriteArgs#data
          */
         public static FpWriteArgs data(List<String> data) {
@@ -149,7 +146,7 @@ public class FpWriteArgs implements CompositeArgument {
      * @return {@code this} {@link FpWriteArgs}.
      */
     public FpWriteArgs data(List<String> data) {
-        LettuceAssert.notNull(data, "columnCount must not be null");
+        LettuceAssert.notNull(data, "data must not be null");
 
         return this.data(toStringArray(data));
     }

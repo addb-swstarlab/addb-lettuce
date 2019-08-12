@@ -17,6 +17,8 @@ package io.lettuce.core.api.sync;
 
 import io.lettuce.core.*;
 
+import java.util.List;
+
 /**
  * Reactive executed commands for ADDB.
  *
@@ -34,4 +36,12 @@ public interface AddbCommands {
      */
     String fpwrite(FpWriteArgs fpWriteArgs);
 
+    /**
+     * Scan row-column data on relation from ADDB.
+     *
+     * @param fpScanArgs dataKey, partitionInfo, columnCount, data
+     *
+     * @return List&lt;String&gt; array-reply list of row-column data.
+     */
+    List<String> fpscan(FpScanArgs fpScanArgs);
 }
