@@ -26,5 +26,5 @@ public interface NodeSelectionCommands<K, V> extends BaseNodeSelectionCommands<K
         NodeSelectionHashCommands<K, V>, NodeSelectionHLLCommands<K, V>, NodeSelectionKeyCommands<K, V>,
         NodeSelectionListCommands<K, V>, NodeSelectionScriptingCommands<K, V>, NodeSelectionServerCommands<K, V>,
         NodeSelectionSetCommands<K, V>, NodeSelectionSortedSetCommands<K, V>, NodeSelectionStreamCommands<K, V>,
-        NodeSelectionStringCommands<K, V> {
+        NodeSelectionStringCommands<K, V>, NodeSelectionAddbCommands {
 }

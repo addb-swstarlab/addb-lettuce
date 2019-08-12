@@ -19,6 +19,7 @@ import static io.lettuce.core.protocol.CommandType.*;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -53,7 +54,8 @@ public abstract class AbstractRedisReactiveCommands<K, V> implements RedisHashRe
         RedisKeyReactiveCommands<K, V>, RedisStringReactiveCommands<K, V>, RedisListReactiveCommands<K, V>,
         RedisSetReactiveCommands<K, V>, RedisSortedSetReactiveCommands<K, V>, RedisScriptingReactiveCommands<K, V>,
         RedisServerReactiveCommands<K, V>, RedisHLLReactiveCommands<K, V>, BaseRedisReactiveCommands<K, V>,
-        RedisTransactionalReactiveCommands<K, V>, RedisGeoReactiveCommands<K, V>, RedisClusterReactiveCommands<K, V> {
+        RedisTransactionalReactiveCommands<K, V>, RedisGeoReactiveCommands<K, V>, RedisClusterReactiveCommands<K, V>,
+        AddbReactiveCommands {
 
     private final Object mutex = new Object();
     private final StatefulConnection<K, V> connection;
@@ -2214,5 +2216,11 @@ public abstract class AbstractRedisReactiveCommands<K, V> implements RedisHashRe
     @Override
     public Mono<Long> zunionstore(K destination, ZStoreArgs storeArgs, K... keys) {
         return createMono(() -> commandBuilder.zunionstore(destination, storeArgs, keys));
+    }
+
+    // ADDB
+    @Override
+    public Mono<String> fpwrite(FpWriteArgs fpWriteArgs) {
+        return createMono(() -> commandBuilder.fpwrite(fpWriteArgs));
     }
 }

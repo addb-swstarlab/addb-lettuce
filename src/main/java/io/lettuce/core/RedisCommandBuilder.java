@@ -3086,6 +3086,14 @@ class RedisCommandBuilder<K, V> extends BaseRedisCommandBuilder<K, V> {
         return createCommand(ZUNIONSTORE, new IntegerOutput<>(codec), args);
     }
 
+    // ADDB
+    Command<K, V, String> fpwrite(FpWriteArgs fpWriteArgs) {
+        CommandArgs<K, V> args = new CommandArgs(codec);
+        fpWriteArgs.build(args);
+
+        return createCommand(FPWRITE, new StatusOutput<>(codec), args);
+    }
+
     private boolean allElementsInstanceOf(Object[] objects, Class<?> expectedAssignableType) {
 
         for (Object object : objects) {

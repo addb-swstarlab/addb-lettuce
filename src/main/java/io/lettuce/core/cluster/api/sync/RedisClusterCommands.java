@@ -32,7 +32,7 @@ import io.lettuce.core.api.sync.*;
 public interface RedisClusterCommands<K, V> extends BaseRedisCommands<K, V>, RedisGeoCommands<K, V>, RedisHashCommands<K, V>,
         RedisHLLCommands<K, V>, RedisKeyCommands<K, V>, RedisListCommands<K, V>, RedisScriptingCommands<K, V>,
         RedisServerCommands<K, V>, RedisSetCommands<K, V>, RedisSortedSetCommands<K, V>, RedisStreamCommands<K, V>,
-        RedisStringCommands<K, V> {
+        RedisStringCommands<K, V>, AddbCommands {
 
     /**
      * Set the default timeout for operations.

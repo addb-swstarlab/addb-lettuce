@@ -16,6 +16,7 @@
 package io.lettuce.core.cluster.api.async;
 
 import io.lettuce.core.cluster.api.NodeSelectionSupport;
+import io.lettuce.core.cluster.api.sync.NodeSelectionAddbCommands;
 import io.lettuce.core.cluster.api.sync.NodeSelectionStreamCommands;
 
 /**
@@ -27,5 +28,5 @@ public interface NodeSelectionAsyncCommands<K, V> extends BaseNodeSelectionAsync
         NodeSelectionGeoAsyncCommands<K, V>, NodeSelectionHashAsyncCommands<K, V>, NodeSelectionHLLAsyncCommands<K, V>,
         NodeSelectionKeyAsyncCommands<K, V>, NodeSelectionListAsyncCommands<K, V>, NodeSelectionScriptingAsyncCommands<K, V>,
         NodeSelectionServerAsyncCommands<K, V>, NodeSelectionSetAsyncCommands<K, V>, NodeSelectionSortedSetAsyncCommands<K, V>,
-        NodeSelectionStreamCommands<K, V>, NodeSelectionStringAsyncCommands<K, V> {
+        NodeSelectionStreamCommands<K, V>, NodeSelectionStringAsyncCommands<K, V>, NodeSelectionAddbCommands {
 }

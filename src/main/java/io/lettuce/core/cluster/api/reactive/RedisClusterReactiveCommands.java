@@ -36,7 +36,7 @@ public interface RedisClusterReactiveCommands<K, V> extends BaseRedisReactiveCom
         RedisHashReactiveCommands<K, V>, RedisHLLReactiveCommands<K, V>, RedisKeyReactiveCommands<K, V>,
         RedisListReactiveCommands<K, V>, RedisScriptingReactiveCommands<K, V>, RedisServerReactiveCommands<K, V>,
         RedisSetReactiveCommands<K, V>, RedisSortedSetReactiveCommands<K, V>, RedisStreamReactiveCommands<K, V>,
-        RedisStringReactiveCommands<K, V> {
+        RedisStringReactiveCommands<K, V>, AddbReactiveCommands {
 
     /**
      * Set the default timeout for operations.

@@ -96,7 +96,10 @@ public enum CommandType implements ProtocolKeyword {
 
     // CLUSTER
 
-    ASKING, CLUSTER;
+    ASKING, CLUSTER,
+
+    // ADDB
+    FPWRITE;
 
     public final byte[] bytes;
 

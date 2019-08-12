@@ -46,7 +46,7 @@ public abstract class AbstractRedisAsyncCommands<K, V> implements RedisHashAsync
         RedisStringAsyncCommands<K, V>, RedisListAsyncCommands<K, V>, RedisSetAsyncCommands<K, V>,
         RedisSortedSetAsyncCommands<K, V>, RedisScriptingAsyncCommands<K, V>, RedisServerAsyncCommands<K, V>,
         RedisHLLAsyncCommands<K, V>, BaseRedisAsyncCommands<K, V>, RedisTransactionalAsyncCommands<K, V>,
-        RedisGeoAsyncCommands<K, V>, RedisClusterAsyncCommands<K, V> {
+        RedisGeoAsyncCommands<K, V>, RedisClusterAsyncCommands<K, V>, AddbAsyncCommands {
 
     private final StatefulConnection<K, V> connection;
     private final RedisCodec<K, V> codec;
@@ -2147,5 +2147,11 @@ public abstract class AbstractRedisAsyncCommands<K, V> implements RedisHashAsync
     @Override
     public RedisFuture<Long> zunionstore(K destination, ZStoreArgs storeArgs, K... keys) {
         return dispatch(commandBuilder.zunionstore(destination, storeArgs, keys));
+    }
+
+    // ADDB
+    @Override
+    public RedisFuture<String> fpwrite(FpWriteArgs fpWriteArgs) {
+        return dispatch(commandBuilder.fpwrite(fpWriteArgs));
     }
 }
