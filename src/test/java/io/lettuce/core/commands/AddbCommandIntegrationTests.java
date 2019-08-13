@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import io.lettuce.core.*;
 import io.lettuce.core.addb.FpScanArgs;
 import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -76,5 +77,20 @@ public class AddbCommandIntegrationTests extends TestSupport {
         assertThat(results.contains("D2")).isTrue();
         assertThat(results.contains("D3")).isTrue();
         assertThat(results.contains("D4")).isTrue();
+    }
+
+    @Test
+    void metakeys() {
+        FpWriteArgs wargs = FpWriteArgs.Builder.dataKey("D:{100:1:2}")
+                .partitionInfo("1:2")
+                .columnCount("4")
+                .data("D1", "D2", "D3", "D4");
+        redis.fpwrite(wargs);
+
+        MetakeysArgs margs = MetakeysArgs.Builder.pattern("*")
+                .statements("D1*1*EqualTo:$D2*2*EqualTo:$");
+        List<String> results = redis.metakeys(margs);
+        assertThat(results).hasSize(1);
+        assertThat(results.contains("M:{100:1:2}")).isTrue();
     }
 }
