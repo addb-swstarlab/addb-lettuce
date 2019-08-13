@@ -7,24 +7,17 @@
         <version>9</version>
     </parent>
 
-    <groupId>io.lettuce</groupId>
-    <artifactId>lettuce-core</artifactId>
-    <version>5.1.8.RELEASE</version>
+    <groupId>kr.ac.yonsei.delab</groupId>
+    <artifactId>addb-lettuce</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Lettuce</name>
+    <name>ADDB-Lettuce</name>
 
-    <description>Advanced and thread-safe Java Redis client for synchronous, asynchronous, and
+    <description>(Lettuce) Advanced and thread-safe Java Redis client for synchronous, asynchronous, and
         reactive usage. Supports Cluster, Sentinel, Pipelining, Auto-Reconnect, Codecs
-        and much more.
+        and much more. (ADDB) Extends lettuce api for using on ADDB [based on lettuce 5.1.8.RELEASE version]
     </description>
-
-    <url>http://github.com/lettuce-io/lettuce-core</url>
-
-    <organization>
-        <name>lettuce.io</name>
-        <url>https://lettuce.io</url>
-    </organization>
 
     <licenses>
         <license>
@@ -34,16 +27,6 @@
         </license>
     </licenses>
 
-    <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/lettuce-io/lettuce-core</url>
-    </ciManagement>
-
-    <issueManagement>
-        <system>Github</system>
-        <url>https://github.com/lettuce-io/lettuce-core/issues</url>
-    </issueManagement>
-
     <developers>
         <developer>
             <id>will</id>
@@ -52,6 +35,10 @@
         <developer>
             <id>mp911de</id>
             <name>Mark Paluch</name>
+        </developer>
+        <developer>
+            <id>totorody</id>
+            <name>Doyoung Kim</name>
         </developer>
     </developers>
 
@@ -72,13 +59,6 @@
         <!-- You need a running redis+sentinel for all tests, therefore disabled by default -->
         <skipITs>true</skipITs>
     </properties>
-
-    <scm>
-        <connection>scm:git:https://github.com/lettuce-io/lettuce-core.git</connection>
-        <developerConnection>scm:git:https://github.com/lettuce-io/lettuce-core.git</developerConnection>
-        <url>http://github.com/lettuce-io/lettuce-core</url>
-      <tag>5.1.8.RELEASE</tag>
-  </scm>
 
     <dependencyManagement>
         <dependencies>
