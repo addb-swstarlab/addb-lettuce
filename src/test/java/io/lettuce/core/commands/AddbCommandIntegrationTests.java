@@ -20,6 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import javax.inject.Inject;
 
 import io.lettuce.core.*;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

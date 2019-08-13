@@ -17,8 +17,9 @@ package io.lettuce.core.commands.reactive;
 
 import javax.inject.Inject;
 
-import io.lettuce.core.FpScanArgs;
-import io.lettuce.core.FpWriteArgs;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import io.lettuce.core.commands.AddbCommandIntegrationTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +27,10 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-import io.lettuce.core.KeyValue;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.reactive.RedisReactiveCommands;
 import io.lettuce.core.api.sync.RedisCommands;
-import io.lettuce.core.commands.StringCommandIntegrationTests;
 import io.lettuce.test.ReactiveSyncInvocationHandler;
-
-import java.util.Arrays;
 
 /**
  * @author Doyoung Kim
@@ -82,6 +79,23 @@ class AddbReactiveCommandIntegrationTests extends AddbCommandIntegrationTests {
         Flux<String> fpscan = reactive.fpscan(sargs);
         StepVerifier.create(fpscan)
                 .expectNext("D1", "D2", "D3", "D4")
+                .verifyComplete();
+    }
+
+    @Test
+    void metakeys() {
+        FpWriteArgs wargs = FpWriteArgs.Builder.dataKey("D:{100:1:2}")
+                .partitionInfo("1:2")
+                .columnCount("4")
+                .data("D1", "D2", "D3", "D4");
+        Mono<String> fpwrite = reactive.fpwrite(wargs);
+        fpwrite.subscribe();
+
+        MetakeysArgs margs = MetakeysArgs.Builder.pattern("*")
+                .statements("D1*1*EqualTo:$D2*2*EqualTo:$");
+        Flux<String> metakeys = reactive.metakeys(margs);
+        StepVerifier.create(metakeys)
+                .expectNext("M:{100:1:2}")
                 .verifyComplete();
     }
 }

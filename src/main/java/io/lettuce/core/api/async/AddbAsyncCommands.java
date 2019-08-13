@@ -16,6 +16,9 @@
 package io.lettuce.core.api.async;
 
 import io.lettuce.core.*;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 
 import java.util.List;
 
@@ -44,4 +47,13 @@ public interface AddbAsyncCommands {
      * @return List&lt;String&gt; array-reply list of row-column data.
      */
     RedisFuture<List<String>> fpscan(FpScanArgs fpScanArgs);
+
+    /**
+     * Scan meta-data on relation from ADDB.
+     *
+     * @param metakeysArgs pattern, statements tree
+     *
+     * @return List&lt;String&gt; array-reply list of meta-data keys.
+     */
+    RedisFuture<List<String>> metakeys(MetakeysArgs metakeysArgs);
 }

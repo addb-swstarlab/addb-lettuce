@@ -15,7 +15,9 @@
  */
 package io.lettuce.core.api.reactive;
 
-import io.lettuce.core.*;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -45,4 +47,13 @@ public interface AddbReactiveCommands {
      * @return List&lt;String&gt; array-reply list of row-column data.
      */
     Flux<String> fpscan(FpScanArgs fpScanArgs);
+
+    /**
+     * Scan meta-data on relation from ADDB.
+     *
+     * @param metakeysArgs pattern, statements tree
+     *
+     * @return List&lt;String&gt; array-reply list of meta-data keys.
+     */
+    Flux<String> metakeys(MetakeysArgs metakeysArgs);
 }

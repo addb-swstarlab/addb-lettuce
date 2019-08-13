@@ -25,6 +25,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import io.lettuce.core.GeoArgs.Unit;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import io.lettuce.core.api.StatefulConnection;
 import io.lettuce.core.api.async.*;
 import io.lettuce.core.cluster.api.async.RedisClusterAsyncCommands;
@@ -2158,5 +2161,10 @@ public abstract class AbstractRedisAsyncCommands<K, V> implements RedisHashAsync
     @Override
     public RedisFuture<List<String>> fpscan(FpScanArgs fpScanArgs) {
         return dispatch(commandBuilder.fpscan(fpScanArgs));
+    }
+
+    @Override
+    public RedisFuture<List<String>> metakeys(MetakeysArgs metakeysArgs) {
+        return dispatch(commandBuilder.metakeys(metakeysArgs));
     }
 }

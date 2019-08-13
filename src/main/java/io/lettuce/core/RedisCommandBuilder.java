@@ -24,6 +24,9 @@ import java.util.*;
 
 import io.lettuce.core.Range.Boundary;
 import io.lettuce.core.XReadArgs.StreamOffset;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import io.lettuce.core.codec.RedisCodec;
 import io.lettuce.core.codec.Utf8StringCodec;
 import io.lettuce.core.internal.LettuceAssert;
@@ -3099,6 +3102,13 @@ class RedisCommandBuilder<K, V> extends BaseRedisCommandBuilder<K, V> {
         fpScanArgs.build(args);
 
         return createCommand(FPSCAN, new AddbListOutput(codec), args);
+    }
+
+    Command<K, V, List<String>> metakeys(MetakeysArgs metakeysArgs) {
+        CommandArgs<K, V> args = new CommandArgs(codec);
+        metakeysArgs.build(args);
+
+        return createCommand(METAKEYS, new AddbListOutput(codec), args);
     }
 
     private boolean allElementsInstanceOf(Object[] objects, Class<?> expectedAssignableType) {

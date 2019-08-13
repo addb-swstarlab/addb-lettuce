@@ -19,11 +19,13 @@ import static io.lettuce.core.protocol.CommandType.*;
 
 import java.time.Duration;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import io.lettuce.core.GeoArgs.Unit;
@@ -2227,5 +2229,10 @@ public abstract class AbstractRedisReactiveCommands<K, V> implements RedisHashRe
     @Override
     public Flux<String> fpscan(FpScanArgs fpScanArgs) {
         return createDissolvingFlux(() -> commandBuilder.fpscan(fpScanArgs));
+    }
+
+    @Override
+    public Flux<String> metakeys(MetakeysArgs metakeysArgs) {
+        return createDissolvingFlux(() -> commandBuilder.metakeys(metakeysArgs));
     }
 }

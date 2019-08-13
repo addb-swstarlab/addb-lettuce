@@ -15,8 +15,9 @@
  */
 package io.lettuce.core.cluster.api.sync;
 
-import io.lettuce.core.FpScanArgs;
-import io.lettuce.core.FpWriteArgs;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 
 import java.util.List;
 
@@ -45,4 +46,13 @@ public interface NodeSelectionAddbCommands {
      * @return List&lt;String&gt; array-reply list of row-column data.
      */
     Executions<List<String>> fpscan(FpScanArgs fpScanArgs);
+
+    /**
+     * Scan meta-data on relation from ADDB.
+     *
+     * @param metakeysArgs pattern, statements tree
+     *
+     * @return List&lt;String&gt; array-reply list of meta-data keys.
+     */
+    Executions<List<String>> metakeys(MetakeysArgs metakeysArgs);
 }

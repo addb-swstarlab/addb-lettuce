@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.lettuce.core;
+package io.lettuce.core.addb;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.lettuce.core.CompositeArgument;
 import io.lettuce.core.internal.LettuceAssert;
 import io.lettuce.core.protocol.CommandArgs;
 

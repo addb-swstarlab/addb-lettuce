@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.lettuce.core;
+package io.lettuce.core.addb;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.lettuce.core.CompositeArgument;
 import io.lettuce.core.internal.LettuceAssert;
 import io.lettuce.core.protocol.CommandArgs;
 
@@ -79,7 +80,7 @@ public class FpScanArgs implements CompositeArgument {
     }
 
     /**
-     * Specify Data key for storing relational data.
+     * Specify Data key for scanning relational data.
      *
      * @param dataKey must not be {@literal null}.
      * @return {@code this} {@link FpScanArgs}.
@@ -92,7 +93,7 @@ public class FpScanArgs implements CompositeArgument {
     }
 
     /**
-     * Specify column data for storing relational data.
+     * Specify column data for scanning relational data.
      *
      * @param columns must not be {@literal null}.
      * @return {@code this} {@link FpScanArgs}.
@@ -104,7 +105,7 @@ public class FpScanArgs implements CompositeArgument {
     }
 
     /**
-     * Specify column data for storing relational data.
+     * Specify column data for scanning relational data.
      *
      * @param columns must not be {@literal null}.
      * @return {@code this} {@link FpScanArgs}.
