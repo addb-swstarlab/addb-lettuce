@@ -2,14 +2,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>9</version>
+        <groupId>kr.ac.yonsei.delab</groupId>
+        <artifactId>addb-parent</artifactId>
+        <version>0.0.1</version>
     </parent>
-
-    <groupId>kr.ac.yonsei.delab</groupId>
     <artifactId>addb-lettuce</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
 
     <name>ADDB-Lettuce</name>
