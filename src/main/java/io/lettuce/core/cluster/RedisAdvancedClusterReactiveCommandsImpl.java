@@ -29,6 +29,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import org.reactivestreams.Publisher;
 
 import reactor.core.publisher.Flux;
@@ -483,6 +486,37 @@ public class RedisAdvancedClusterReactiveCommandsImpl<K, V> extends AbstractRedi
     public Mono<StreamScanCursor> scan(KeyStreamingChannel<K> channel, ScanCursor scanCursor) {
         return clusterScan(scanCursor, (connection, cursor) -> connection.scan(channel, cursor),
                 reactiveClusterStreamScanCursorMapper());
+    }
+
+    /**
+     * ADDB - fpwrite
+     */
+    @Override
+    public Mono<String> fpwrite(FpWriteArgs args) {
+        int slot = SlotHash.getSlot(args.getDataKey());
+        Mono<RedisClusterReactiveCommands<K, V>> connectionBySlot = findConnectionBySlotReactive(slot);
+        return connectionBySlot.flatMap(cmd -> cmd.fpwrite(args));
+    }
+
+    /**
+     * ADDB - fpscan
+     */
+    @Override
+    public Flux<String> fpscan(FpScanArgs args) {
+        int slot = SlotHash.getSlot(args.getDataKey());
+        Map<String, Publisher<String>> publishers =
+                executeOnNodes(commands -> commands.fpscan(args), redisClusterNode -> redisClusterNode.hasSlot(slot));
+        return Flux.merge(publishers.values());
+    }
+
+    /**
+     * ADDB - metakeys
+     */
+    @Override
+    public Flux<String> metakeys(MetakeysArgs args) {
+        Map<String, Publisher<String>> publishers =
+                executeOnNodes(commands -> commands.metakeys(args), RedisClusterNode::isConnected);
+        return Flux.merge(publishers.values());
     }
 
     @SuppressWarnings("unchecked")

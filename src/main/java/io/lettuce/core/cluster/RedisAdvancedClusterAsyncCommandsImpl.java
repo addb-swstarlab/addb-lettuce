@@ -30,6 +30,9 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import io.lettuce.core.*;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.async.RedisAsyncCommands;
 import io.lettuce.core.api.async.RedisKeyAsyncCommands;
@@ -582,6 +585,58 @@ public class RedisAdvancedClusterAsyncCommandsImpl<K, V> extends AbstractRedisAs
     public RedisFuture<StreamScanCursor> scan(KeyStreamingChannel<K> channel, ScanCursor scanCursor) {
         return clusterScan(scanCursor, (connection, cursor) -> connection.scan(channel, cursor),
                 asyncClusterStreamScanCursorMapper());
+    }
+
+
+    /**
+     * ADDB - fpwrite
+     */
+    @Override
+    public RedisFuture<String> fpwrite(FpWriteArgs args) {
+        int slot = SlotHash.getSlot(args.getDataKey());
+
+        RedisClusterAsyncCommands<K, V> connectionBySlot = findConnectionBySlot(slot);
+
+        if (connectionBySlot != null) {
+            return connectionBySlot.fpwrite(args);
+        }
+
+        return super.fpwrite(args);
+    }
+
+    /**
+     * ADDB - fpscan
+     */
+    @Override
+    public RedisFuture<List<String>> fpscan(FpScanArgs args) {
+        int slot = SlotHash.getSlot(args.getDataKey());
+        Map<String, CompletableFuture<List<String>>> executions =
+                executeOnNodes(commands -> commands.fpscan(args), redisClusterNode -> redisClusterNode.hasSlot(slot));
+
+        return new PipelinedRedisFuture<>(executions, objectPipelinedRedisFuture -> {
+            List<String> result = new ArrayList<>();
+            for (CompletableFuture<List<String>> future : executions.values()) {
+                result.addAll(MultiNodeExecution.execute(future::get));
+            }
+            return result;
+        });
+    }
+
+    /**
+     * ADDB - metakeys
+     */
+    @Override
+    public RedisFuture<List<String>> metakeys(MetakeysArgs args) {
+        Map<String, CompletableFuture<List<String>>> executions =
+                executeOnNodes(commands -> commands.metakeys(args), RedisClusterNode::isConnected);
+
+        return new PipelinedRedisFuture<>(executions, objectPipelinedRedisFuture -> {
+            List<String> result = new ArrayList<>();
+            for (CompletableFuture<List<String>> future : executions.values()) {
+                result.addAll(MultiNodeExecution.execute(future::get));
+            }
+            return result;
+        });
     }
 
     private <T extends ScanCursor> RedisFuture<T> clusterScan(ScanCursor cursor,

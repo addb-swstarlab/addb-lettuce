@@ -132,4 +132,8 @@ public class FpScanArgs implements CompositeArgument {
         args.add(dataKey);
         args.add(String.join(",", columns));
     }
+
+    public String getDataKey() {
+        return dataKey;
+    }
 }

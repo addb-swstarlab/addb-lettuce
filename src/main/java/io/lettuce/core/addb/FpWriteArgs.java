@@ -185,4 +185,8 @@ public class FpWriteArgs implements CompositeArgument {
             args.add(datum);
         }
     }
+
+    public String getDataKey() {
+        return dataKey;
+    }
 }

@@ -30,7 +30,7 @@ public class DefaultRedisClusterClient {
     private RedisClusterClient redisClient;
 
     private DefaultRedisClusterClient() {
-        redisClient = RedisClusterClient.create(RedisURI.Builder.redis(TestSettings.host(), TestSettings.port(900))
+        redisClient = RedisClusterClient.create(RedisURI.Builder.redis(TestSettings.host(), TestSettings.port(1621))
                 .withClientName("my-client").build());
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override

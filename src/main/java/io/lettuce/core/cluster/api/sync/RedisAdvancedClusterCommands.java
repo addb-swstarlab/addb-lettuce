@@ -20,6 +20,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import io.lettuce.core.*;
+import io.lettuce.core.addb.FpScanArgs;
+import io.lettuce.core.addb.FpWriteArgs;
+import io.lettuce.core.addb.MetakeysArgs;
 import io.lettuce.core.api.sync.RedisKeyCommands;
 import io.lettuce.core.api.sync.RedisScriptingCommands;
 import io.lettuce.core.api.sync.RedisServerCommands;
@@ -351,6 +354,21 @@ public interface RedisAdvancedClusterCommands<K, V> extends RedisClusterCommands
      * @see RedisKeyCommands#scan(ScanCursor, ScanArgs)
      */
     StreamScanCursor scan(KeyStreamingChannel<K> channel, ScanCursor scanCursor);
+
+    /**
+     * ADDB - fpwrite
+     */
+    String fpwrite(FpWriteArgs args);
+
+    /**
+     * ADDB - fpscan
+     */
+    List<String> fpscan(FpScanArgs args);
+
+    /**
+     * ADDB - metakeys
+     */
+    List<String> metakeys(MetakeysArgs args);
 
     /**
      * Touch one or more keys with pipelining. Touch sets the last accessed time for a key. Non-exsitent keys wont get created.
