@@ -52,7 +52,7 @@
         <reactor-version>3.2.11.RELEASE</reactor-version>
         <reactive-streams-tck.version>1.0.0</reactive-streams-tck.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <spring-version>4.3.20.RELEASE</spring-version>
+        <spring-version>5.3.6</spring-version>
 
         <!-- You need a running redis+sentinel for all tests, therefore disabled by default -->
         <skipITs>true</skipITs>
